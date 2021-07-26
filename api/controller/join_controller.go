@@ -104,7 +104,7 @@ func (server *Server) GetJoin(c *gin.Context) {
 	}
 
 	join := models.Join{}
-	data, err := join.GetJoinInfo(server.DB, uint(mID))
+	data, count, err := join.GetJoinInfo(server.DB, uint(mID))
 	if err != nil {
 		errList["No_join"] = "no join found"
 		c.JSON(http.StatusNotFound, gin.H{
@@ -116,6 +116,7 @@ func (server *Server) GetJoin(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":   http.StatusOK,
+		"total_user" : count,
 		"response": data,
 	})
 }
