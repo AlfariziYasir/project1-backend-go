@@ -48,15 +48,17 @@ func (j *Join) DeleteJoin(db *gorm.DB) (*Join, error) {
 	return dj, nil
 }
 
-func (j *Join) GetJoinInfo(db *gorm.DB, mID uint) (*[]Join, error) {
+func (j *Join) GetJoinInfo(db *gorm.DB, mID uint) (*[]Join, count int, error) {
 	joins := []Join{}
 
 	err := db.Debug().Model(&Join{}).Where("meeting_id = ?", mID).Find(&joins).Error
 	if err != nil {
 		return &[]Join{}, err
 	}
+	
+	err = db.Debug.Model(&Join{}).Where("meeting_id = ?", mID).Count(&count).Error
 
-	return &joins, nil
+	return &joins, count, nil
 }
 
 func (j *Join) DeleteUserJoin(db *gorm.DB, uid string) (int64, error) {
