@@ -1,2 +1,6 @@
 # project1-backend-go
-project backend go
+- feature :
+-   - casbin
+-   - gin-gonic
+-   - gorm
+-   - jwt authentication
